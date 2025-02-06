@@ -1,0 +1,62 @@
+<div class="loader" *ngIf="spinner">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+</div><div class="overlay" *ngIf="spinner"></div>
+
+<div class="col-12 lg:col-12 xl:col-12" *ngIf="WaterData" >
+
+
+
+<div class="grid" style="margin-left: 0rem!important;">
+    <div class="col-12 lg:col-12 xl:col-6" >
+        <div class="card" style="height: 450px; overflow: scroll;">
+            <h4>Available Device</h4>
+        <div style="width: 100%;">
+        <!-- <div class="card">*ngIf="!dodiStatus"  -->
+            <div class="grid" style="margin-left: 0rem!important;">
+
+
+
+                      </div>
+                      <br><br>
+                      <div class="grid p-fluid " >
+                      <div class="col-12 lg:col-6 xl:col-4" *ngFor="let device of cities">
+                          <button  (click)="dodi(device)" pButton pRipple type="button" icon="pi pi-arrow-circle-down " class="p-button-rounded p-button-outlined"> {{device.device_name}}</button>
+                      </div>
+                      </div>
+           </div>
+            <div style="width: 100%;">
+
+            </div>
+
+</div>
+</div>
+<div class="col-12 lg:col-12 xl:col-6" >
+
+    <div class="col-12 lg:col-6 xl:col-12" >
+        <div class="card" id="chart">
+            <h4>Flow Rate Chart</h4>
+            <apx-chart
+            [series]="chartOptions.series"
+            [chart]="chartOptions.chart"
+            [dataLabels]="chartOptions.dataLabels"
+            [plotOptions]="chartOptions.plotOptions"
+            [yaxis]="chartOptions.yaxis"
+            [xaxis]="chartOptions.xaxis"
+            [fill]="chartOptions.fill"
+            [title]="chartOptions.title"
+          ></apx-chart>
+          </div>
+        <!-- Total Flow Cards -->
+
+
+      </div>
+
+
+</div>
+</div>
+
+</div>

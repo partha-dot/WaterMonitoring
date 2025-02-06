@@ -1,0 +1,314 @@
+<div class="loader" *ngIf="spinner">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+</div><div class="overlay" *ngIf="spinner"></div>
+<p-toast></p-toast>
+
+<div class="col-12 lg:col-12 xl:col-12" >
+
+        <div class="grid" style="margin-left: 0rem!important;">
+            <div class="col-12 lg:col-12 xl:col-12" >
+
+                   <!-- <div *ngIf="dodiStatus" style="width: 100%;"> -->
+                    <div style="width: 100%;">
+                    <router-outlet></router-outlet>
+                       <div class="col-12 lg:col-12 xl:col-12">
+
+                                <div class="grid" style="margin-left: 0rem!important;">
+
+                                        <div style="width: 100%;" class="abcd">
+                                            <p style="font-size:x-large; font-weight: 500;">
+                                                &nbsp;&nbsp;&nbsp;&nbsp;  Date: {{WaterData?.date | date:'dd/MM/yyyy'}} &nbsp;Time: {{WaterData.time}}
+
+                                            </p>
+
+                                            <div >Signal:
+                                                <span style="font-weight: 800;">{{convertToPercentage(WaterData?.tw?WaterData?.tw:0)| number:'1.2-2' }}%</span>
+                                                <i class="icon__signal-strength signal-0" *ngIf="(!WaterData?.tw)||WaterData?.tw==0">
+                                                    <span class="bar-1"></span>
+                                                    <span class="bar-2"></span>
+                                                    <span class="bar-3"></span>
+                                                    <span class="bar-4"></span>
+                                                </i>
+                                                <i class="icon__signal-strength signal-1" *ngIf="convertToPercentage(WaterData?.tw) >=1 && convertToPercentage(WaterData?.tw) <=25">
+                                                    <span class="bar-1"></span>
+                                                    <span class="bar-2"></span>
+                                                    <span class="bar-3"></span>
+                                                    <span class="bar-4"></span>
+                                                </i>
+                                                <i class="icon__signal-strength signal-2" *ngIf="convertToPercentage(WaterData?.tw) >=26 && convertToPercentage(WaterData?.tw) <=50">
+                                                    <span class="bar-1"></span>
+                                                    <span class="bar-2"></span>
+                                                    <span class="bar-3"></span>
+                                                    <span class="bar-4"></span>
+                                                </i>
+                                                <i class="icon__signal-strength signal-3" *ngIf="convertToPercentage(WaterData?.tw) >=51 && convertToPercentage(WaterData?.tw) <=75">
+                                                    <span class="bar-1"></span>
+                                                    <span class="bar-2"></span>
+                                                    <span class="bar-3"></span>
+                                                    <span class="bar-4"></span>
+                                                </i>
+                                                <i  class="icon__signal-strength signal-4" *ngIf="convertToPercentage(WaterData?.tw)>75">
+                                                    <span class="bar-1"></span>
+                                                    <span class="bar-2"></span>
+                                                    <span class="bar-3"></span>
+                                                    <span class="bar-4"></span>
+                                                </i>
+                                                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                                <p-button icon="pi pi-clock"
+                                                class="flex-auto md:flex-initial whitespace-nowrap"
+                                                (click)="show()" label="Scheduling"/>
+                                            </div>
+                                            <!-- <p-button [outlined]="true" icon="pi pi-filter-slash" label="Clear" (click)="clear(dt)" /> -->
+
+                                        </div>
+
+                                    <!-- <button (click)="back()" pButton pRipple type="button" icon="pi pi-arrow-left" class="p-button-rounded p-button-outlined">BACK</button> -->
+                                    <div class="col-12 lg:col-12 xl:col-4"  style="text-align: center;">
+                                        <div class="card mb-0" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); transition: 0.3s; width: 100%; border-radius: 10px; padding: 0px!important;">
+                                            <div style="border-radius: 10px 10px 0 0; background-color: #307f8f; height:40px;" class="tiles__header">
+                                              <div style="margin: 10px; position: absolute; height: 23px; width: 23px;">
+                                                <i class="pi pi-clock text-white-600 text-xl" style="position: absolute; padding-top: 3px; padding-left: 5px;"></i>
+                                              </div>
+                                              <div style="padding-left: 50px; position: absolute;">
+                                                <h5 style="color: white;">{{ getCardTitle('Total Flow', WaterData?.device) }}</h5>
+                                              </div>
+                                            </div>
+                                            <h3 style="text-align: center;">
+                                              {{ WaterData?.total_flow1}}
+                                            </h3>
+                                          </div>
+                                    </div>
+                                        <div class="col-12 lg:col-12 xl:col-4"  style="text-align: center;">
+                                            <div class="card mb-0" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); transition: 0.3s; width: 100%; border-radius: 10px; padding: 0px!important;">
+                                                <div style="border-radius: 10px 10px 0 0; background-color: #6f8f30; height:40px;" class="tiles__header">
+                                                  <div style="margin: 10px; position: absolute; height: 23px; width: 23px;">
+                                                    <i class="pi pi-clock text-white-600 text-xl" style="position: absolute; padding-top: 3px; padding-left: 5px;"></i>
+                                                  </div>
+                                                  <div style="padding-left: 50px; position: absolute;">
+                                                    <h5 style="color: white;">{{ getCardTitle('Flow Rate', WaterData?.device) }}</h5>
+                                                  </div>
+                                                </div>
+                                                <h3 style="text-align: center;">
+                                                  {{ WaterData?.flow_rate1}}
+                                                </h3>
+                                              </div>
+                                        </div>
+                                        <div class="col-12 lg:col-12 xl:col-4"  style="text-align: center;">
+                                            <div class="card mb-0" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); transition: 0.3s; width: 100%; border-radius: 10px; padding: 0px!important;">
+                                                <div style="border-radius: 10px 10px 0 0; background-color: #53308f; height:40px;" class="tiles__header">
+                                                  <div style="margin: 10px; position: absolute; height: 23px; width: 23px;">
+                                                    <i class="pi pi-clock text-white-600 text-xl" style="position: absolute; padding-top: 3px; padding-left: 5px;"></i>
+                                                  </div>
+                                                  <div style="padding-left: 50px; position: absolute;">
+                                                    <h5 style="color: white;">{{ getCardTitle('Pressure', WaterData?.device) }}</h5>
+                                                  </div>
+                                                </div>
+                                                <h3 style="text-align: center;">
+                                                  {{ WaterData?.flow_rate1}}%
+                                                </h3>
+                                              </div>
+                                        </div>
+
+                                    <div class="card" style="width: 100%;
+                                    margin-top: 20px;
+                                    margin-bottom: 50px;
+                                    height: 220px;">
+                                        <h5>Start-Stop</h5><br><br>
+                                        <div class="grid p-fluid " >
+
+                                            <div class="col-12 lg:col-12 xl:col-1"  style="text-align: center;">
+
+                                                <div class="field">
+                                                    <label class="switch switch-green">
+                                                        <input type="checkbox" [checked]="do1" class="switch-input" (change)="onCheckbox1Change($event)">
+                                                        <span class="switch-label" data-on="On" data-off="Off"></span>
+                                                        <span class="switch-handle"></span>
+                                                    </label>
+                                                </div>
+                                                <label>VALVE 1</label>
+                                            </div>
+                                            <div class="col-12 lg:col-12 xl:col-1" style="text-align: center;">
+
+                                                <div class="field">
+                                                    <label class="switch switch-green">
+                                                        <input type="checkbox" [checked]="do2" class="switch-input" (change)="onCheckbox2Change($event)">
+                                                        <span class="switch-label" data-on="On" data-off="Off"></span>
+                                                        <span class="switch-handle"></span>
+                                                    </label>
+                                                </div>
+                                                <label>VALVE 2</label>
+                                            </div>
+                                            <div class="col-12 lg:col-12 xl:col-1" style="text-align: center;">
+
+                                                <div class="field">
+                                                    <label class="switch switch-green">
+                                                        <input type="checkbox"[checked]="do3" class="switch-input" (change)="onCheckbox3Change($event)">
+                                                        <span class="switch-label" data-on="On" data-off="Off"></span>
+                                                        <span class="switch-handle"></span>
+                                                    </label>
+                                                </div>
+                                                <label>VALVE 3</label>
+                                            </div>
+                                            <div class="col-12 lg:col-12 xl:col-1" style="text-align: center;">
+
+                                                <div class="field">
+                                                    <label class="switch switch-green">
+                                                        <input type="checkbox" [checked]="do4" class="switch-input" (change)="onCheckbox4Change($event)">
+                                                        <span class="switch-label" data-on="On" data-off="Off"></span>
+                                                        <span class="switch-handle"></span>
+                                                    </label>
+                                                </div>
+                                                <label>VALVE 4</label>
+                                            </div>
+                                            <div class="col-12 lg:col-12 xl:col-1" style="text-align: center;">
+
+                                                <div class="field">
+                                                    <label class="switch switch-green">
+                                                        <input type="checkbox" [checked]="do5" class="switch-input" (change)="onCheckbox5Change($event)">
+                                                        <span class="switch-label" data-on="On" data-off="Off"></span>
+                                                        <span class="switch-handle"></span>
+                                                    </label>
+                                                </div>
+                                                <label>VALVE 5</label>
+                                            </div>
+                                            <div class="col-12 lg:col-12 xl:col-1" style="text-align: center;">
+
+                                                <div class="field">
+                                                    <label class="switch switch-green">
+                                                        <input type="checkbox" [checked]="do6" class="switch-input" (change)="onCheckbox6Change($event)">
+                                                        <span class="switch-label" data-on="On" data-off="Off"></span>
+                                                        <span class="switch-handle"></span>
+                                                    </label>
+                                                </div>
+                                                <label>VALVE 6</label>
+                                            </div>
+                                            <div class="col-12 lg:col-12 xl:col-1" style="text-align: center;">
+
+                                                <div class="field">
+                                                    <label class="switch switch-green">
+                                                        <input type="checkbox" [checked]="do7" class="switch-input" (change)="onCheckbox7Change($event)">
+                                                        <span class="switch-label" data-on="On" data-off="Off"></span>
+                                                        <span class="switch-handle"></span>
+                                                    </label>
+                                                </div>
+                                                <label>VALVE 7</label>
+                                            </div>
+                                            <div class="col-12 lg:col-12 xl:col-1" style="text-align: center;">
+
+                                                <div class="field">
+                                                    <label class="switch switch-green">
+                                                        <input type="checkbox" [checked]="do8" class="switch-input" (change)="onCheckbox8Change($event)">
+                                                        <span class="switch-label" data-on="On" data-off="Off"></span>
+                                                        <span class="switch-handle"></span>
+                                                    </label>
+                                                </div>
+                                                <label>VALVE 8</label>
+                                            </div>
+                                            <div class="col-12 lg:col-12 xl:col-1" style="text-align: center;">
+
+                                                <div class="field">
+                                                    <label class="switch switch-green">
+                                                        <input type="checkbox" [checked]="psr" class="switch-input" (change)="onCheckbox8Change($event)">
+                                                        <span class="switch-label" data-on="On" data-off="Off"></span>
+                                                        <span class="switch-handle"></span>
+                                                    </label>
+                                                </div>
+                                                <label>Pressure</label>
+                                            </div>
+                                            <hr>
+                                            <div class="col-12 lg:col-12 xl:col-3" style="text-align: center;">
+                                                <p-progressBar [value]="50" />
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="card" style="width: 100%;
+                                    margin-top: 20px;
+                                    margin-bottom: 20px;
+                                    height: 220px;">
+                                        <h5>Indicator</h5><br><br>
+                                        <div class="grid p-fluid">
+                                            <div style="text-align: center;padding-left: 20px; width: 12%;">
+                                                <div class="col-12 lg:col-12 xl:col-12">
+                                                    <h5 >VALVE 1</h5>
+                                                    <div class="null led" *ngIf="!led1"></div>
+                                                    <div class="green led"  *ngIf="led1"></div>
+                                                </div>
+                                            </div>
+                                            <div  style="text-align: center;width: 12%;">
+                                                <div class="col-12 lg:col-12 xl:col-12">
+                                                    <h5 >VALVE 2</h5>
+                                                    <div class="null led" *ngIf="!led2"></div>
+                                                    <div class="red led" *ngIf="led2"></div>
+                                                </div>
+                                            </div>
+                                            <div  style="text-align: center;width: 12%;">
+                                                <div class="col-12 lg:col-12 xl:col-12">
+                                                    <h5 >VALVE 3</h5>
+                                                    <div class="null led" *ngIf="!led3"></div>
+                                                    <div class="yellow led" *ngIf="led3"></div>
+                                                </div>
+                                            </div>
+                                            <div  style="text-align: center;width: 12%;">
+                                                <div class="col-12 lg:col-12 xl:col-12">
+                                                    <h5 >VALVE 4</h5>
+                                                    <div class="null led" *ngIf="!led4"></div>
+                                                    <div class="pink led" *ngIf="led4"></div>
+                                                </div>
+
+                                            </div>
+                                            <div  style="text-align: center;width: 12%;">
+                                                <div class="col-12 lg:col-12 xl:col-12">
+                                                    <h5 >VALVE 5</h5>
+                                                    <div class="null led" *ngIf="!led5"></div>
+                                                    <div class="merun led" *ngIf="led5"></div>
+                                                </div>
+
+                                            </div>
+                                            <div  style="text-align: center;width: 12%;">
+                                                <div class="col-12 lg:col-12 xl:col-12">
+                                                    <h5 >VALVE 6</h5>
+                                                    <div class="null led" *ngIf="!led6"></div>
+                                                    <div class="orange led" *ngIf="led6"></div>
+                                                </div>
+
+                                            </div>
+                                            <div  style="text-align: center;width: 12%;">
+                                                <div class="col-12 lg:col-12 xl:col-12">
+                                                    <h5 >VALVE 7</h5>
+                                                    <div class="null led" *ngIf="!led7"></div>
+                                                    <div class="pink led" *ngIf="led7"></div>
+                                                </div>
+
+                                            </div>
+                                            <div  style="text-align: center;width: 12%;">
+                                                <div class="col-12 lg:col-12 xl:col-12">
+                                                    <h5 >VALVE 8</h5>
+                                                    <div class="null led" *ngIf="!led8"></div>
+                                                    <div class="blue led" *ngIf="led8"></div>
+                                                </div>
+
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                        </div>
+                    </div>
+
+
+        </div>
+
+</div>
+
+
+
+
+
