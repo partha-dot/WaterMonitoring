@@ -178,7 +178,7 @@ export class FormLayoutDemoComponent implements OnInit{
                 // console.log(this.models!=null);
                 console.log(this.data);
                 if (this.data === null || (Object.keys(this.data).length === 0 && this.data.constructor === Object)) {
-                  this.stockIn.reset();
+                //   this.stockIn.reset();
                   this.spinner=false;
                   debugger
                 }
