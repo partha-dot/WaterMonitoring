@@ -118,13 +118,25 @@
                                     margin-bottom: 50px;
                                     height: 220px;">
                                         <h5>Start-Stop</h5><br><br>
+                                        <!-- <div class="grid p-fluid " >
+                                            <div *ngFor="let valveState of valves; let i = index" class="col-12 lg:col-12 xl:col-1" style="text-align: center;">
+                                                <div class="field">
+                                                  <label class="switch switch-green">
+                                                    <input type="checkbox" [checked]="valveState" [disabled]="isDisabled(i)" class="switch-input" (change)="onCheckboxChange(i, $event)">
+                                                    <span class="switch-label" data-on="On" data-off="Off"></span>
+                                                    <span class="switch-handle"></span>
+                                                  </label>
+                                                </div>
+                                                <label>VALVE {{ i + 1 }}</label>
+                                              </div>
+                                        </div> -->
                                         <div class="grid p-fluid " >
 
                                             <div class="col-12 lg:col-12 xl:col-1"  style="text-align: center;">
 
                                                 <div class="field">
                                                     <label class="switch switch-green">
-                                                        <input type="checkbox" [checked]="do1" class="switch-input" (change)="onCheckbox1Change($event)">
+                                                        <input type="checkbox" [checked]="do1" [disabled]="isDisabled('do1')" class="switch-input" (change)="onCheckboxChange('do1', $event)">
                                                         <span class="switch-label" data-on="On" data-off="Off"></span>
                                                         <span class="switch-handle"></span>
                                                     </label>
@@ -135,7 +147,7 @@
 
                                                 <div class="field">
                                                     <label class="switch switch-green">
-                                                        <input type="checkbox" [checked]="do2" class="switch-input" (change)="onCheckbox2Change($event)">
+                                                        <input type="checkbox" [checked]="do2" [disabled]="isDisabled('do2')"  class="switch-input" (change)="onCheckboxChange('do2', $event)">
                                                         <span class="switch-label" data-on="On" data-off="Off"></span>
                                                         <span class="switch-handle"></span>
                                                     </label>
@@ -146,7 +158,7 @@
 
                                                 <div class="field">
                                                     <label class="switch switch-green">
-                                                        <input type="checkbox"[checked]="do3" class="switch-input" (change)="onCheckbox3Change($event)">
+                                                        <input type="checkbox"[checked]="do3" [disabled]="isDisabled('do3')"  class="switch-input" (change)="onCheckboxChange('do3', $event)">
                                                         <span class="switch-label" data-on="On" data-off="Off"></span>
                                                         <span class="switch-handle"></span>
                                                     </label>
@@ -157,7 +169,7 @@
 
                                                 <div class="field">
                                                     <label class="switch switch-green">
-                                                        <input type="checkbox" [checked]="do4" class="switch-input" (change)="onCheckbox4Change($event)">
+                                                        <input type="checkbox" [checked]="do4" [disabled]="isDisabled('do4')"  class="switch-input" (change)="onCheckboxChange('do4', $event)">
                                                         <span class="switch-label" data-on="On" data-off="Off"></span>
                                                         <span class="switch-handle"></span>
                                                     </label>
@@ -168,7 +180,7 @@
 
                                                 <div class="field">
                                                     <label class="switch switch-green">
-                                                        <input type="checkbox" [checked]="do5" class="switch-input" (change)="onCheckbox5Change($event)">
+                                                        <input type="checkbox" [checked]="do5" [disabled]="isDisabled('do5')"  class="switch-input" (change)="onCheckboxChange('do5', $event)">
                                                         <span class="switch-label" data-on="On" data-off="Off"></span>
                                                         <span class="switch-handle"></span>
                                                     </label>
@@ -179,7 +191,7 @@
 
                                                 <div class="field">
                                                     <label class="switch switch-green">
-                                                        <input type="checkbox" [checked]="do6" class="switch-input" (change)="onCheckbox6Change($event)">
+                                                        <input type="checkbox" [checked]="do6" [disabled]="isDisabled('do6')"  class="switch-input" (change)="onCheckboxChange('do6', $event)">
                                                         <span class="switch-label" data-on="On" data-off="Off"></span>
                                                         <span class="switch-handle"></span>
                                                     </label>
@@ -190,7 +202,7 @@
 
                                                 <div class="field">
                                                     <label class="switch switch-green">
-                                                        <input type="checkbox" [checked]="do7" class="switch-input" (change)="onCheckbox7Change($event)">
+                                                        <input type="checkbox" [checked]="do7" [disabled]="isDisabled('do7')"  class="switch-input" (change)="onCheckboxChange('do7', $event)">
                                                         <span class="switch-label" data-on="On" data-off="Off"></span>
                                                         <span class="switch-handle"></span>
                                                     </label>
@@ -201,7 +213,7 @@
 
                                                 <div class="field">
                                                     <label class="switch switch-green">
-                                                        <input type="checkbox" [checked]="do8" class="switch-input" (change)="onCheckbox8Change($event)">
+                                                        <input type="checkbox" [checked]="do8" [disabled]="isDisabled('do8')"  class="switch-input" (change)="onCheckboxChange('do8', $event)">
                                                         <span class="switch-label" data-on="On" data-off="Off"></span>
                                                         <span class="switch-handle"></span>
                                                     </label>
@@ -212,7 +224,7 @@
 
                                                 <div class="field">
                                                     <label class="switch switch-green">
-                                                        <input type="checkbox" [checked]="psr" class="switch-input" (change)="onCheckbox8Change($event)">
+                                                        <input type="checkbox" [checked]="psr" class="switch-input" (change)="onCheckbox9Change($event)">
                                                         <span class="switch-label" data-on="On" data-off="Off"></span>
                                                         <span class="switch-handle"></span>
                                                     </label>
@@ -220,9 +232,6 @@
                                                 <label>Pressure</label>
                                             </div>
                                             <hr>
-                                            <!-- <div class="col-12 lg:col-12 xl:col-3" style="text-align: center;">
-                                                <p-progressBar [value]="50" />
-                                            </div> -->
                                         </div>
 
                                     </div>

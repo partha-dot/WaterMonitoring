@@ -92,7 +92,8 @@ export class ChartsDemoComponent implements OnInit, OnDestroy {
     do7:boolean=false;
     do8:boolean=false;
     psr:boolean=false;
-
+    valves: boolean[] = Array(8).fill(false); // Initializes 8 checkboxes as unchecked
+    maxSelectable = 3;
     spinner:boolean=false;
     client_id:number=(+localStorage.getItem('c_id'))
     ref: DynamicDialogRef | undefined;
@@ -1079,6 +1080,40 @@ debugger
 
           }
       }
+      onCheckbox9Change(event: Event): void {
+        const checkbox = event.target as HTMLInputElement;
+        if (checkbox.checked) {
+            this.getDevice(9,2)
+
+          } else {
+              this.getDevice(9,1)
+
+          }
+      }
+      getCheckedCount(): number {
+        return [this.do1, this.do2, this.do3, this.do4, this.do5, this.do6, this.do7, this.do8].filter(v => v).length;
+      }
+
+      onCheckboxChange(valve: string, event: Event) {
+        const getValveNumber = (valve: string): number => {
+            return parseInt(valve.replace('do', ''), 10);
+          };
+        const isChecked = (event.target as HTMLInputElement).checked;
+
+        if (isChecked && this.getCheckedCount() >= this.maxSelectable) {
+          // Prevent checking if the max limit is reached
+          (event.target as HTMLInputElement).checked = false;
+          this.getDevice(getValveNumber(valve),1)
+          debugger
+        } else {
+          this[valve] = isChecked;
+          this.getDevice(getValveNumber(valve),2)
+          debugger
+        }
+      }
+      isDisabled(valve: string): boolean {
+        return this.getCheckedCount() >= this.maxSelectable && !this[valve];
+      }
       getOrganization(){
         this.spinner=true;
         const apiUrl = this.api.baseUrl;
@@ -1117,6 +1152,7 @@ debugger
             do_no:no,
             do_status:status
           };
+
     const apiUrl = this.api.baseUrl;
   const token = localStorage.getItem('token');
   const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`)
