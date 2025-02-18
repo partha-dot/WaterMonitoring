@@ -31,7 +31,7 @@ import { MessagesDemoComponent } from '../alert/messagesdemo.component';
 import { webSocket, WebSocketSubject  } from 'rxjs/webSocket';
 import { WebsocketService } from 'src/app/demo/service/web-socket.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormLayoutDemoComponent } from '../stockEntry/formlayoutdemo.component';
+import { FormLayoutDemoComponent } from '../scheduling/formlayoutdemo.component';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Product } from 'src/app/demo/api/product';
 
@@ -613,7 +613,7 @@ export class ChartsDemoComponent implements OnInit, OnDestroy {
 
       }
       getCardTitle(cardType: string, device: string): string {
-        return `${cardType} (${device})`;
+        return `${cardType}`;
       }
 
       // Helper method to resolve dynamic values

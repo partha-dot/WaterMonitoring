@@ -16,7 +16,7 @@ import { Breadcrumb } from 'primeng/breadcrumb';
         { path: 'weather_billing', data: { breadcrumb: 'File' }, loadChildren: () => import('./energy_billing_rep/filedemo.module').then(m => m.FileDemoModule)},
         { path: 'DlyRep', data: { breadcrumb: 'File' }, loadChildren: () => import('./weatherDayRep/filedemo2.module').then(m => m.FileDemo2Module)},
         { path: 'device_m', data: { breadcrumb: 'Float Label' }, loadChildren: () => import('./m_device_management/floatlabeldemo.module').then(m => m.FloatlabelDemoModule) },
-        { path: 'schedul', data: { breadcrumb: 'Form Layout' }, loadChildren: () => import('./stockEntry/formlayoutdemo.module').then(m => m.FormLayoutDemoModule) },
+        { path: 'schedul', data: { breadcrumb: 'Form Layout' }, loadChildren: () => import('./scheduling/formlayoutdemo.module').then(m => m.FormLayoutDemoModule) },
         { path: 'device_s', data: { breadcrumb: 'Input' }, loadChildren: () => import('./m_user_management/inputdemo.module').then(m => m.InputDemoModule) },
         { path: 'profile', data: { breadcrumb: 'Invalid State' }, loadChildren: () => import('./profile/invalidstatedemo.module').then(m => m.InvalidStateDemoModule) },
         { path: 'io', data: { breadcrumb: 'Invalid State2' }, loadChildren: () => import('./io_Intrigation/invalidstatedemo2.module').then(m => m.InvalidStateDemo2Module) },

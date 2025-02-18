@@ -111,6 +111,8 @@ export class FloatLabelDemoComponent implements OnInit  {
     this.product = {};
     this.submitted = false;
     this.AddproductDialog = true;
+    this.addDevice.controls['deviceId'].enable()
+      this.addDevice.controls['imeiNo'].enable()
 }
 
   public getSeverity(status: string) {

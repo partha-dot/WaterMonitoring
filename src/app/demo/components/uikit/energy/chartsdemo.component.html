@@ -20,8 +20,9 @@
                                 <div class="grid" style="margin-left: 0rem!important;">
 
                                         <div style="width: 100%;" class="abcd">
-                                            <p style="font-size:x-large; font-weight: 500;">
-                                                &nbsp;&nbsp;&nbsp;&nbsp;  Date: {{WaterData?.date | date:'dd/MM/yyyy'}} &nbsp;Time: {{WaterData.time}}
+
+                                            <p style="font-size:large; font-weight: 500;">
+                                                &nbsp;&nbsp;DEVICE: {{WaterData?.device}} &nbsp;  DATE: {{WaterData?.date | date:'dd/MM/yyyy'}} &nbsp;TIME: {{WaterData.time}}
 
                                             </p>
 
@@ -78,7 +79,7 @@
                                               </div>
                                             </div>
                                             <h3 style="text-align: center;">
-                                              {{ WaterData?.total_flow1}}
+                                              {{ WaterData?.total_flow1?WaterData?.total_flow1:0.00}}
                                             </h3>
                                           </div>
                                     </div>
@@ -93,7 +94,7 @@
                                                   </div>
                                                 </div>
                                                 <h3 style="text-align: center;">
-                                                  {{ WaterData?.flow_rate1}}
+                                                  {{ WaterData?.flow_rate1?WaterData?.flow_rate1:0.00}}
                                                 </h3>
                                               </div>
                                         </div>
@@ -104,11 +105,11 @@
                                                     <i class="pi pi-clock text-white-600 text-xl" style="position: absolute; padding-top: 3px; padding-left: 5px;"></i>
                                                   </div>
                                                   <div style="padding-left: 50px; position: absolute;">
-                                                    <h5 style="color: white;">{{ getCardTitle('Pressure', WaterData?.device) }}</h5>
+                                                    <h5 style="color: white;">{{ getCardTitle('Total Pressure', WaterData?.device) }}</h5>
                                                   </div>
                                                 </div>
                                                 <h3 style="text-align: center;">
-                                                  {{ WaterData?.flow_rate1}}%
+                                                  {{ WaterData?.pressure?WaterData?.pressure:0.00}}
                                                 </h3>
                                               </div>
                                         </div>

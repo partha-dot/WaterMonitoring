@@ -128,9 +128,37 @@ export class FormLayoutDemoComponent implements OnInit{
           this.getDealer();
         }
     resetData(){
-      this.stockIn.reset();
-      this.selectedSetting=[];
-      this.selectedDealer={};
+        this.resetDevice();
+
+    }
+    resetDevice(){
+        const apiUrl = this.api.baseUrl;
+          const token = localStorage.getItem('token');
+          const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`)
+          const dt={
+              organization_id:this.api.routingORGid,
+              device_id:this.api.selectedDevice.device_id,
+              device:this.api.selectedDevice.device,
+              client_id:localStorage.getItem('c_id')
+          }
+          this.http.post(apiUrl+'/mqtt/reset_sheduling',dt, { headers }).subscribe(
+              (response) => {
+                console.log(response);
+                this.stockIn.reset();
+                this.selectedSetting=[];
+                this.selectedDealer={};
+
+              },
+              (error) => {
+          if(error.status=='401'){
+            this.router.navigate(['/']);
+
+           }
+          console.log(error.status);
+                console.error(error);
+              }
+
+            );
     }
     mode(i:any){
         console.log(i);
