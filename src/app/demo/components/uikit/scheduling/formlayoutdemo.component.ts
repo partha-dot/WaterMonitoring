@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, Renderer2,OnInit, ViewChild, ElementRef } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Company } from 'src/app/demo/api/company';
@@ -83,10 +83,11 @@ export class FormLayoutDemoComponent implements OnInit{
                 device: [''],
                 do_type: [0],
                 do_no: [''],
-                one_on_time: [''],
-                one_off_time: [''],
-                two_on_time: [''],
-                two_off_time: ['']
+                one_on_time: ['',[Validators.required]],
+                one_off_time: ['',[Validators.required]],
+                two_on_time: ['',[Validators.required]],
+                two_off_time: ['',[Validators.required]],
+                datalog_sec :[0,[Validators.required, Validators.min(1)]]
               });
               this.week=[
                 {
@@ -122,7 +123,7 @@ export class FormLayoutDemoComponent implements OnInit{
     ngOnInit(): void {
         this.ct=this.stockIn.controls;
         console.log(this.ct.value);
-
+this.ct['datalog_sec'].setValue(5);
         //   this.getDeviceModel();
         //   this.addSkill() ;
           this.getDealer();
@@ -144,9 +145,42 @@ export class FormLayoutDemoComponent implements OnInit{
           this.http.post(apiUrl+'/mqtt/reset_sheduling',dt, { headers }).subscribe(
               (response) => {
                 console.log(response);
-                this.stockIn.reset();
-                this.selectedSetting=[];
-                this.selectedDealer={};
+                // this.stockIn.reset();
+                // this.selectedSetting=[];
+                // this.selectedDealer={};
+                this.spinner=false;
+                this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Reset Device', life: 3000 });
+
+              },
+              (error) => {
+          if(error.status=='401'){
+            this.router.navigate(['/']);
+
+           }
+          console.log(error.status);
+                console.error(error);
+              }
+
+            );
+    }
+    getSettingfrmDevice(){
+        const apiUrl = this.api.baseUrl;
+          const token = localStorage.getItem('token');
+          const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`)
+          const dt={
+              organization_id:this.api.routingORGid,
+              device_id:this.api.selectedDevice.device_id,
+              device:this.api.selectedDevice.device,
+              client_id:localStorage.getItem('c_id')
+          }
+          this.http.post(apiUrl+'/mqtt/read_sheduling',dt, { headers }).subscribe(
+              (response) => {
+                console.log(response);
+                // this.stockIn.reset();
+                // this.selectedSetting=[];
+                // this.selectedDealer={};
+                this.spinner=false;
+                this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Get Device Setting', life: 3000 });
 
               },
               (error) => {
@@ -226,7 +260,8 @@ export class FormLayoutDemoComponent implements OnInit{
                       one_on_time: this.convertToDate(this.data.one_on_time),
                       one_off_time: this.convertToDate(this.data.one_off_time),
                       two_on_time: this.convertToDate(this.data.two_on_time),
-                      two_off_time: this.convertToDate(this.data.two_off_time)
+                      two_off_time: this.convertToDate(this.data.two_off_time),
+                      datalog_sec :this.data.datalog_sec
                     });
                       console.log(this.ct.value);
                       console.log( this.stockIn.controls);
@@ -287,54 +322,65 @@ export class FormLayoutDemoComponent implements OnInit{
     return `${hours}:${minutes}:${seconds}`;
   }
     insertStockData(){
-      this.spinner=true;
+        if(this.stockIn.valid){
+            this.spinner=true;
 
-      const credentials = {
+            const credentials = {
 
 
-        organization_id: this.api.routingORGid ,//// org id pathabe
-        device_id: this.api.selectedDevice.device_id, //// device id
-        device: this.api.selectedDevice.device, //// device
-        do_type: this.selectedMode,
-        do_no: this.selectedDealer.code, //  1 to 8
-        one_on_time: this.formatTime(this.ct.one_on_time.value),
-        one_off_time:this.formatTime(this.ct.one_off_time.value),
-        two_on_time: this.formatTime(this.ct.two_on_time.value),
-        two_off_time: this.formatTime(this.ct.two_off_time.value)
-        // sels_warranty:this.formatedDate(this.ct.sels_warranty.value)
-      };
-console.log(credentials);
+              organization_id: this.api.routingORGid ,//// org id pathabe
+              device_id: this.api.selectedDevice.device_id, //// device id
+              device: this.api.selectedDevice.device, //// device
+              do_type: this.selectedMode,
+              do_no: this.selectedDealer.code, //  1 to 8
+              one_on_time: this.formatTime(this.ct.one_on_time.value),
+              one_off_time:this.formatTime(this.ct.one_off_time.value),
+              two_on_time: this.formatTime(this.ct.two_on_time.value),
+              two_off_time: this.formatTime(this.ct.two_off_time.value),
+              datalog_sec :this.ct.datalog_sec .value
+              // sels_warranty:this.formatedDate(this.ct.sels_warranty.value)
+            };
+      console.log(credentials);
 
-    const apiUrl = this.api.baseUrl;
-    const token = localStorage.getItem('token');
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`)
+          const apiUrl = this.api.baseUrl;
+          const token = localStorage.getItem('token');
+          const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`)
 
-    this.http.post(apiUrl+'/mqtt/publish_schedule', credentials,{ headers }).subscribe(
-        (response) => {
-          console.log(response);
-          const res:any=response
+          this.http.post(apiUrl+'/mqtt/publish_schedule', credentials,{ headers }).subscribe(
+              (response) => {
+                console.log(response);
+                const res:any=response
 
-          if(res.status){
-            this.spinner=false;
-            this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Setting Changed', life: 3000 });
-          this.resetData();
-          }
-          else{
-            this.spinner=false;
-            this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Data Related Issue!!', life: 3000 });
-          }
-        },
-        (error) => {
-        if(error.status=='401'){
-          this.router.navigate(['/']);
+                if(res.status){
+                  this.spinner=false;
+                  this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Setting Changed', life: 3000 });
 
-         }
-        console.log(error.status);
-          console.error(error);
-            this.spinner=false;
-            this.messageService.add({ severity: 'error', summary: 'Error', detail: 'From Server Side !!', life: 3000 });
+              //   this.resetData();
+                  this.stockIn.reset();
+                }
+                else{
+                  this.spinner=false;
+                  this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Data Related Issue!!', life: 3000 });
+                }
+              },
+              (error) => {
+              if(error.status=='401'){
+                this.router.navigate(['/']);
+
+               }
+              console.log(error.status);
+                console.error(error);
+                  this.spinner=false;
+                  this.messageService.add({ severity: 'error', summary: 'Error', detail: 'From Server Side !!', life: 3000 });
+              }
+            );
         }
-      );
+        else{
+            this.spinner=false;
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Fill all value...', life: 3000 });
+
+        }
+
     }
 
     filterCountry(event: any) {

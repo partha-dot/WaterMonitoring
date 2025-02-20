@@ -20,6 +20,10 @@
                                 <div class="grid" style="margin-left: 0rem!important;">
 
                                         <div style="width: 100%;" class="abcd">
+                                            <!-- <div class="livenow">
+                                                <div></div>
+                                                <h5>Live</h5>
+                                              </div> -->
 
                                             <p style="font-size:large; font-weight: 500;">
                                                 &nbsp;&nbsp;DEVICE: {{WaterData?.device}} &nbsp;  DATE: {{WaterData?.date | date:'dd/MM/yyyy'}} &nbsp;TIME: {{WaterData.time}}
@@ -68,7 +72,7 @@
                                         </div>
 
                                     <!-- <button (click)="back()" pButton pRipple type="button" icon="pi pi-arrow-left" class="p-button-rounded p-button-outlined">BACK</button> -->
-                                    <div class="col-12 lg:col-12 xl:col-4"  style="text-align: center;">
+                                    <div class="col-12 lg:col-12 xl:col-3"  style="text-align: center;">
                                         <div class="card mb-0" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); transition: 0.3s; width: 100%; border-radius: 10px; padding: 0px!important;">
                                             <div style="border-radius: 10px 10px 0 0; background-color: #307f8f; height:40px;" class="tiles__header">
                                               <div style="margin: 10px; position: absolute; height: 23px; width: 23px;">
@@ -83,7 +87,7 @@
                                             </h3>
                                           </div>
                                     </div>
-                                        <div class="col-12 lg:col-12 xl:col-4"  style="text-align: center;">
+                                        <div class="col-12 lg:col-12 xl:col-3"  style="text-align: center;">
                                             <div class="card mb-0" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); transition: 0.3s; width: 100%; border-radius: 10px; padding: 0px!important;">
                                                 <div style="border-radius: 10px 10px 0 0; background-color: #6f8f30; height:40px;" class="tiles__header">
                                                   <div style="margin: 10px; position: absolute; height: 23px; width: 23px;">
@@ -98,7 +102,7 @@
                                                 </h3>
                                               </div>
                                         </div>
-                                        <div class="col-12 lg:col-12 xl:col-4"  style="text-align: center;">
+                                        <div class="col-12 lg:col-12 xl:col-3"  style="text-align: center;">
                                             <div class="card mb-0" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); transition: 0.3s; width: 100%; border-radius: 10px; padding: 0px!important;">
                                                 <div style="border-radius: 10px 10px 0 0; background-color: #53308f; height:40px;" class="tiles__header">
                                                   <div style="margin: 10px; position: absolute; height: 23px; width: 23px;">
@@ -110,6 +114,23 @@
                                                 </div>
                                                 <h3 style="text-align: center;">
                                                   {{ WaterData?.pressure?WaterData?.pressure:0.00}}
+                                                </h3>
+                                              </div>
+                                        </div>
+                                        <div class="col-12 lg:col-12 xl:col-3"  style="text-align: center;">
+                                            <div class="card mb-0" style="box-shadow: 0 4px 8px 0 rgba(8, 101, 118, 0.704); transition: 0.3s; width: 100%; border-radius: 10px; padding: 0px!important;">
+                                                <div style="border-radius: 10px 10px 0 0; background-color: #308f86; height:40px;" class="tiles__header">
+                                                  <div style="margin: 10px; position: absolute; height: 23px; width: 23px;">
+                                                    <i class="pi pi-clock text-white-600 text-xl" style="position: absolute; padding-top: 3px; padding-left: 5px;"></i>
+                                                  </div>
+                                                  <div style="padding-left: 50px; position: absolute;">
+                                                    <h5 style="color: white;">{{ getCardTitle('Battery', WaterData?.device) }}</h5>
+                                                    <!-- <h5 style="color: white;">{{ getCardTitle('Battery', WaterData?.device) }}</h5> -->
+                                                  </div>
+                                                </div>
+                                                <h3 style="text-align: center;">
+                                                  <!-- 89 % -->
+                                                  {{ WaterData?.bat_v?WaterData?.bat_v:0}}%
                                                 </h3>
                                               </div>
                                         </div>

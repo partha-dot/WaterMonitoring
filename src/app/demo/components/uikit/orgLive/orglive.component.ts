@@ -539,9 +539,11 @@ export class OrgLiveComponent implements OnInit, OnDestroy {
     }
     dodi(device){
         this.route.paramMap.subscribe((params) => {
-            this.organizationName = params.get('organization')!;
+            this.organizationName = params.get('organization');
             console.log('Organization:', this.organizationName);
             this.api.routingORGid=this.organizationName;
+            localStorage.setItem('routeDevice',device.device)
+            localStorage.setItem('routeDeviceId',device.device_id)
             this.api.selectedDevice=device;//to be change
           });
         this.router.navigate(['/app/outlet/water']);
@@ -619,6 +621,7 @@ export class OrgLiveComponent implements OnInit, OnDestroy {
       return result
       }
       getDeviceLiveData(id:number){
+
 
       this.connectToWebSocket(id);
       console.log(this.websocketService.socketStatus);
@@ -1042,7 +1045,7 @@ export class OrgLiveComponent implements OnInit, OnDestroy {
               this.spinner=false;
               this.data1=response
               this.products=this.data1.data
-
+            //   this.getDeviceLiveData(+this.organizationName)
 
 
             },

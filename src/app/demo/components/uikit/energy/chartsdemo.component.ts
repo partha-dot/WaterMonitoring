@@ -262,7 +262,7 @@ export class ChartsDemoComponent implements OnInit, OnDestroy {
 
         private messageService: MessageService, private confirmationService: ConfirmationService,private api:ApiService) {
         // this.getOrganization();
-        this.getDevice1();
+
 
         this.subscription = this.layoutService.configUpdate$.subscribe(config => {
         });
@@ -336,6 +336,8 @@ export class ChartsDemoComponent implements OnInit, OnDestroy {
    }
     ngOnInit() {
         this.organizationName=this.api.routingORGid
+
+        this.getDevice1();
         console.log(this.api.routingORGid);
 
         this.dodiStatus=false;
@@ -622,7 +624,7 @@ export class ChartsDemoComponent implements OnInit, OnDestroy {
       }
     getDevice1(){
         const credentials = {
-            organization_id:this.api.routingORGid,
+            organization_id:this.api.routingORGid?this.api.routingORGid:localStorage.getItem('defaultORG'),
             client_id:this.client_id
           };
 
@@ -636,10 +638,14 @@ export class ChartsDemoComponent implements OnInit, OnDestroy {
         this.spinner=false;
         this.data1=response;
         this.cities=this.data1.data;
-        this.selectedDealer= this.api.selectedDevice
+        if(this.cities){
+            this.selectedDealer=  this.api.selectedDevice?this.api.selectedDevice:this.cities[0];
+        this.getDeviceLiveData(this.selectedDealer.device,this.selectedDealer.device_id);
+
+        }
+        // this.selectedDealer= this.api.selectedDevice
         debugger
         // this.selectedDealer=this.cities[0]//to be changelllllll
-        this.getDeviceLiveData(this.selectedDealer.device,this.selectedDealer.device_id);
 
         console.log(this.selectedDealer);
 
@@ -653,7 +659,12 @@ export class ChartsDemoComponent implements OnInit, OnDestroy {
         console.log(error.status);
         this.spinner=false
         if(error.status=='422'){
-          this.router.navigate(['/']);
+            // const dev_id=localStorage.getItem('routeDeviceId')
+            // const devName=localStorage.getItem('routeDevice')
+            // this.getDeviceLiveData(devName,+dev_id);
+
+        debugger
+        this.router.navigate([`/app/outlet/${localStorage.getItem('fastorgid')}`]);
 
          }
         console.log(error.status);
@@ -996,6 +1007,8 @@ export class ChartsDemoComponent implements OnInit, OnDestroy {
       if (this.intervalId) {
         clearInterval(this.intervalId);
       }
+      localStorage.setItem('routeDevice',null)
+      localStorage.setItem('routeDeviceId',null)
       this.websocketService.devsocketClose();
 debugger
     }
@@ -1103,11 +1116,18 @@ debugger
         if (isChecked && this.getCheckedCount() >= this.maxSelectable) {
           // Prevent checking if the max limit is reached
           (event.target as HTMLInputElement).checked = false;
-          this.getDevice(getValveNumber(valve),1)
+        //   this.getDevice(getValveNumber(valve),1)
           debugger
         } else {
-          this[valve] = isChecked;
-          this.getDevice(getValveNumber(valve),2)
+            if(isChecked){
+                this[valve] = isChecked;
+                this.getDevice(getValveNumber(valve),2)
+            }
+            else{
+                this[valve] = isChecked;
+                this.getDevice(getValveNumber(valve),1)
+            }
+
           debugger
         }
       }
@@ -1131,7 +1151,7 @@ debugger
               this.data1=response
               this.products=this.data1.data
             // this.getDevice1(this.products[0]?.organization_id);
-
+            // this.getDeviceLiveData(this.products[0]?.organization_id)
 
             },
             (error) => {

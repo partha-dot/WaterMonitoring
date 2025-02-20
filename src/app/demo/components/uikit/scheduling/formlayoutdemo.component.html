@@ -5,7 +5,7 @@
 			<h5>Manage Scheduling</h5>
 			<form [formGroup]="stockIn">
 				<div class="p-fluid p-formgrid grid">
-                    <div class="field col-12 md:col-2" >
+                    <div class="field col-12 md:col-4" >
                         <!-- [(ngModel)]="selectedDealer"
 
                             [(ngModel)]="selectedSetting" -->
@@ -19,7 +19,7 @@
                             placeholder="Select a Valve" />
 
                     </div>
-					<div class="field col-12 md:col-2">
+					<div class="field col-12 md:col-4">
 						<label htmlFor="firstname2">Setting Type</label>
                         <p-dropdown
                             [options]="dropdownItems2"
@@ -29,7 +29,13 @@
                             placeholder="Select Setting" />
 
 					</div>
-
+                    <div class="field col-12 md:col-4" >
+                        <label htmlFor="city">Datalog (Min)</label>
+                        <!-- <span class="p-input-icon-right"> -->
+                            <input pInputText  formControlName="datalog_sec" type="number"  placeholder="Datalog interval" />
+                        <!-- <i class="pi pi-clock"></i> -->
+                        <!-- </span> -->
+                    </div>
                         <div class="field col-12 md:col-2" >
                             <label htmlFor="city">One On Timer</label>
                             <span class="p-input-icon-right">
@@ -67,13 +73,15 @@
                             </span>
                         </div>
 
+
 				</div>
 
 
 					<div class="field col-12 md:col-12" >
 
 						<p-button icon="pi pi-check" (click)="insertStockData()" styleClass="p-button-primary " label="Save & Apply"></p-button>
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<p-button icon="pi pi-refresh" (click)="resetData()" styleClass="p-button-danger" label="Reset"></p-button>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<p-button icon="pi pi-refresh" (click)="resetData()" styleClass="p-button-danger" label="Reset Drvice"></p-button>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<p-button icon="pi pi-upload" (click)="getSettingfrmDevice()" styleClass="p-button-warning" label="Get device Settings"></p-button>
 
 					</div>
 					<div class="field col-12 md:col-2" >
