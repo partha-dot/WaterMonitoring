@@ -1,0 +1,111 @@
+<div class="grid">
+
+	<div class="col-12">
+		<div class="card">
+			<h5>Manage Scheduling</h5>
+			<form [formGroup]="stockIn">
+				<div class="p-fluid p-formgrid grid">
+                    <div class="field col-12 md:col-4" >
+                        <!-- [(ngModel)]="selectedDealer"
+
+                            [(ngModel)]="selectedSetting" -->
+                        <label htmlFor="firstname2">Select a Valve</label>
+                        <p-dropdown
+                            [options]="dropdownItems"
+                            [(ngModel)]="selectedDealer"
+                            (onChange)="setDealer($event)"
+
+                            optionLabel="name"
+                            placeholder="Select a Valve" />
+
+                    </div>
+					<div class="field col-12 md:col-4">
+						<label htmlFor="firstname2">Setting Type</label>
+                        <p-dropdown
+                            [options]="dropdownItems2"
+							(onChange)="mode($event)"
+                            optionLabel="name"
+                            formControlName="do_type"
+                            placeholder="Select Setting" />
+
+					</div>
+                    <div class="field col-12 md:col-4" >
+                        <label htmlFor="city">Datalog (Min)</label>
+                        <!-- <span class="p-input-icon-right"> -->
+                            <input pInputText  formControlName="datalog_sec" type="number"  placeholder="Datalog interval" />
+                        <!-- <i class="pi pi-clock"></i> -->
+                        <!-- </span> -->
+                    </div>
+                        <div class="field col-12 md:col-2" >
+                            <label htmlFor="city">One On Timer</label>
+                            <span class="p-input-icon-right">
+                            <p-calendar
+                            [timeOnly]="true"
+                            placeholder="00:00"
+                            [hourFormat]="24" formControlName="one_on_time" ></p-calendar>
+                            <!-- <i class="pi pi-clock"></i> -->
+                            </span>
+                        </div>
+                        <div class="field col-12 md:col-2" >
+                            <label htmlFor="city">One Off Timer</label>
+                            <span class="p-input-icon-right">
+                            <p-calendar
+                            [timeOnly]="true"
+                            placeholder="00:00"
+                            [hourFormat]="24" formControlName="one_off_time" ></p-calendar>
+                            <!-- <i class="pi pi-clock"></i> -->
+                            </span>
+                        </div>
+                        <div class="field col-12 md:col-2" >
+                            <label htmlFor="city">Two On Timer</label>
+                            <span class="p-input-icon-right">
+                            <p-calendar
+                            [timeOnly]="true"
+                            placeholder="00:00"
+                            [hourFormat]="24" formControlName="two_on_time" ></p-calendar>
+                            <!-- <i class="pi pi-clock"></i> -->
+                            </span>
+                        </div>
+                        <div class="field col-12 md:col-2" >
+                            <label htmlFor="city">Two Off Timer</label>
+                            <span class="p-input-icon-right">
+                            <p-calendar
+                            placeholder="00:00"
+                            [timeOnly]="true"
+                            [hourFormat]="24" formControlName="two_off_time" ></p-calendar>
+                            <!-- <i class="pi pi-clock"></i> -->
+                            </span>
+                        </div>
+
+
+				</div>
+
+
+					<div class="field col-12 md:col-12" >
+
+						<p-button icon="pi pi-check" (click)="insertStockData()" styleClass="p-button-primary " label="Save & Apply"></p-button>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<p-button icon="pi pi-refresh" (click)="resetData()" styleClass="p-button-danger" label="Reset Totalizer"></p-button>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<p-button icon="pi pi-upload" (click)="getSettingfrmDevice()" styleClass="p-button-warning" label="Get device Settings"></p-button>
+
+					</div>
+					<div class="field col-12 md:col-2" >
+
+					</div>
+					  <!-- <button type="button" (click)="addSkill()">Add Skill</button> -->
+					  <!-- <p-button label="Submit" icon="pi pi-check" styleClass="p-button-success"></p-button> -->
+					  <!-- <button type="submit" [disabled]="stockIn.invalid">Submit</button> -->
+
+
+			</form>
+
+		</div>
+	</div>
+</div>
+<p-toast></p-toast>
+<div class="loader" *ngIf="spinner">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+</div><div class="overlay" *ngIf="spinner"></div>
