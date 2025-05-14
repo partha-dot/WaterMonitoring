@@ -16,10 +16,12 @@ import { DropdownModule } from 'primeng/dropdown';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { TableModule } from 'primeng/table';
+import { BadgeModule } from 'primeng/badge';
 
 
 @NgModule({
 	imports: [
+		BadgeModule,
         TableModule,
 		TabViewModule,
 		DropdownModule,

@@ -13,6 +13,17 @@ h5 {
   font-size: 13px;
   padding: 0px !important;
 }
+.button-online {
+  background-color: transparent !important;
+  color: green !important;
+  border: 1px solid green !important;
+}
+
+.button-offline {
+  background-color: transparent !important;
+  color: red !important;
+  border: 1px solid red !important;
+}
 
 
 h3{

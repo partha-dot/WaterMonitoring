@@ -24,10 +24,14 @@
                                                 <div></div>
                                                 <h5>Live</h5>
                                               </div> -->
-
-                                            <p style="font-size:large; font-weight: 500;">
+                                              <div class="col-12 lg:col-2 xl:col-1" >
+                                                <button pButton pRipple label="Online" class="p-button-success" *ngIf="deviceStatus"></button>
+                                                <button pButton pRipple label="Offline" class="p-button-secondary" *ngIf="!deviceStatus"></button>
+                                                </div>
+                                                
+                                            <p style="font-size:large; font-weight: 500;"><u>
                                                 &nbsp;&nbsp;DEVICE: {{WaterData?.device}} &nbsp;  DATE: {{WaterData?.date | date:'dd/MM/yyyy'}} &nbsp;TIME: {{WaterData.time}}
-
+                                            </u>
                                             </p>
 
                                             <div >Signal:
@@ -139,19 +143,9 @@
                                     margin-top: 20px;
                                     margin-bottom: 50px;
                                     height: 220px;">
-                                        <h5>Start-Stop</h5><br><br>
-                                        <!-- <div class="grid p-fluid " >
-                                            <div *ngFor="let valveState of valves; let i = index" class="col-12 lg:col-12 xl:col-1" style="text-align: center;">
-                                                <div class="field">
-                                                  <label class="switch switch-green">
-                                                    <input type="checkbox" [checked]="valveState" [disabled]="isDisabled(i)" class="switch-input" (change)="onCheckboxChange(i, $event)">
-                                                    <span class="switch-label" data-on="On" data-off="Off"></span>
-                                                    <span class="switch-handle"></span>
-                                                  </label>
-                                                </div>
-                                                <label>VALVE {{ i + 1 }}</label>
-                                              </div>
-                                        </div> -->
+                                        <h5>Start-Stop</h5>
+                                        <br>
+                                      
                                         <div class="grid p-fluid " >
 
                                             <div class="col-12 lg:col-12 xl:col-1"  style="text-align: center;">
@@ -246,15 +240,27 @@
 
                                                 <div class="field">
                                                     <label class="switch switch-green">
-                                                        <input type="checkbox" [checked]="psr" class="switch-input" (change)="onCheckbox9Change($event)">
+                                                        <input type="checkbox" [checked]="do9" [disabled]="isDisabled('do9')" class="switch-input" (change)="onCheckbox9Change($event)">
                                                         <span class="switch-label" data-on="On" data-off="Off"></span>
                                                         <span class="switch-handle"></span>
                                                     </label>
                                                 </div>
                                                 <label>Pressure</label>
                                             </div>
+                                            <div class="col-12 lg:col-12 xl:col-1" style="text-align: center;">
+
+                                                <div class="field">
+                                                    <label >
+                                                        <button class="button button1" (click)="sendData()">SEND</button>
+
+                                                    </label>
+                                                </div>
+                                                
+                                            </div>
                                             <hr>
                                         </div>
+                                        <br><br>
+                                        <small><Span style="color: rgb(226, 9, 9);">* Only 2 valve on at a time</Span></small>
 
                                     </div>
                                     <div class="card" style="width: 100%;

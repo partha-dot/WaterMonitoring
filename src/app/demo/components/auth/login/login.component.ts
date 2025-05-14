@@ -61,7 +61,7 @@ export class LoginComponent implements OnInit{
 
 
             // this.getDevice1(this.products[0]?.organization_id);
-            this.router.navigate([`/app/outlet/${this.orgList[0]?.organization_id}/project/1`]);
+            this.router.navigate([`/app/outlet/${this.orgList[0]?.organization_id}/project/5`]);
 
 
             },

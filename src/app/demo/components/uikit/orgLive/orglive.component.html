@@ -12,7 +12,7 @@
 
 <div class="grid" style="margin-left: 0rem!important;">
     <div class="col-12 lg:col-12 xl:col-12" >
-        <div class="card" style="height: 450px; overflow: scroll;">
+        <div class="card" style="height: 600px; overflow: scroll;">
             <h4>Available Device</h4>
         <div style="width: 100%;">
         <!-- <div class="card">*ngIf="!dodiStatus"  -->
@@ -22,11 +22,41 @@
 
                       </div>
                       <br><br>
-                      <div class="grid p-fluid " >
+                      <!-- <div class="grid p-fluid " >
                       <div class="col-12 lg:col-6 xl:col-4" *ngFor="let device of cities">
-                          <button  (click)="dodi(device)" pButton pRipple type="button" icon="pi pi-arrow-circle-down " class="p-button-rounded p-button-outlined"> {{device.device_name}}</button>
+                          <button  (click)="dodi(device)" pButton pRipple type="button" icon="pi pi-arrow-circle-down " class="p-button-rounded p-button-outlined"> {{device.device_name}} 
+                          </button>
+                            <p-badge [value]="device.status=='Y'?'Online':'Offline'" [severity]="device.status=='Y'?'success':'danger'"></p-badge>
+
                       </div>
-                      </div>
+                      </div> -->
+                      <div class="grid p-fluid">
+            <div class="col-12 lg:col-6 xl:col-4" *ngFor="let device of cities">
+                <div class="button-badge-wrapper">
+                <button
+                    (click)="dodi(device)"
+                    pButton
+                    pRipple
+                    type="button"
+                    icon="pi pi-arrow-circle-down"
+                      [ngClass]="{
+                    'button-online': device.status === 'Y',
+                    'button-offline': device.status !== 'Y'
+                    }"
+                    class="p-button-rounded p-button-outlined"
+                >
+                    {{ device.device_name }}
+                    <p-badge
+                    [value]="device.status === 'Y' ? 'Online' : 'Offline'"
+                    [severity]="device.status === 'Y' ? 'success' : 'danger'"
+                    class="badge-inside-button"
+                ></p-badge>
+                </button>
+                
+                </div>
+            </div>
+            </div>
+
            </div>
             <div style="width: 100%;">
 
@@ -34,7 +64,7 @@
 
 </div>
 </div>
-<div class="col-12 lg:col-12 xl:col-12" >
+<!-- <div class="col-12 lg:col-12 xl:col-12" >
 
     <div class="col-12 lg:col-12 xl:col-12" >
         <div class="card" id="chart">
@@ -50,13 +80,11 @@
             [title]="chartOptions?.title"
           ></apx-chart>
           </div>
-        <!-- Total Flow Cards -->
-
 
       </div>
 
 
-</div>
+</div> -->
 </div>
 
 </div>

@@ -1,18 +1,30 @@
+// 
 .layout-sidebar {
     position: fixed;
+    top: 0;
+    left: 0;
     width: 280px;
-    height: calc(500vh - 9rem);
+    height: 100vh; /* Full viewport height */
     z-index: 1000;
     overflow-y: auto;
+    overflow-x: hidden;
     -webkit-user-select: none;
     user-select: none;
-    top: 0rem;
-    left: 0rem;
-    transition: transform 0.2s, left 0.2s;
+    transition: transform 0.3s ease-in-out;
     background: linear-gradient(15deg, rgb(36 112 175) 0%, rgb(35 113 176) 50%, rgb(30 119 147) 100%);
-    border-radius: -2px;
     padding: 0.5rem 1.5rem;
     box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.02), 0px 0px 2px rgba(0, 0, 0, 0.05), 0px 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+/* Optional: Make it hidden and toggleable on small screens */
+@media (max-width: 768px) {
+    .layout-sidebar {
+        transform: translateX(-100%);
+    }
+
+    .layout-sidebar.active {
+        transform: translateX(0);
+    }
 }
 
 .layout-menu {

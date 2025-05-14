@@ -91,9 +91,10 @@ export class ChartsDemoComponent implements OnInit, OnDestroy {
     do6:boolean=false;
     do7:boolean=false;
     do8:boolean=false;
-    psr:boolean=false;
+    do9:boolean=false;
+    deviceStatus:boolean=false;
     valves: boolean[] = Array(8).fill(false); // Initializes 8 checkboxes as unchecked
-    maxSelectable = 3;
+    maxSelectable = 2;
     spinner:boolean=false;
     client_id:number=(+localStorage.getItem('c_id'))
     ref: DynamicDialogRef | undefined;
@@ -362,7 +363,7 @@ export class ChartsDemoComponent implements OnInit, OnDestroy {
 
         //   setInterval(() => {
         //     this.selectedDealer?.device_name ? this.getDeviceLiveData(this.selectedDealer?.device_name) : console.log('hii');
-        //     this.getDevice();
+        //     //this.getDevice();
         //   }, 20000);
     }
     show() {
@@ -497,6 +498,21 @@ export class ChartsDemoComponent implements OnInit, OnDestroy {
     //     );
 
     // }
+    calculateDifference(date1Str: string): number {
+
+      // const date1 = new Date("2024-05-31 15:15:21");
+      const date1 = new Date(date1Str);
+      const date2 = new Date();
+  
+      // Get the time difference in milliseconds
+      const timeDifference = Math.abs(date2.getTime() - date1.getTime());
+  
+      // Convert the time difference to minutes
+      const differenceInMinutes = Math.floor(timeDifference / (1000 * 60));
+      console.log(differenceInMinutes);
+  
+      return differenceInMinutes;
+    }
     connectToWebSocket(c_id,d_id,d_name) {
         this.spinner=true;
         this.websocketSubscription = this.websocketService.connect(c_id,d_id,d_name)
@@ -515,6 +531,13 @@ export class ChartsDemoComponent implements OnInit, OnDestroy {
                   this.lastUpdateTime=''
                   this.lastUpdateTime=this.convertToISTDateTime(this.WaterData.created_at)
                   console.log(this.lastUpdateTime);
+                  if(this.calculateDifference(this.WaterData.created_at)<=60){
+                    this.deviceStatus=true;
+                }
+                else{
+                  this.deviceStatus=false;
+                }
+                debugger
               }
               if(this.livechart?.length>0){
               this.livechartForGraph.sort((a, b) => {
@@ -1016,95 +1039,95 @@ debugger
     onCheckbox1Change(event: Event): void {
         const checkbox = event.target as HTMLInputElement;
         if (checkbox.checked) {
-            this.getDevice(1,2)
+            //this.getDevice(1,2)
 
           } else {
-              this.getDevice(1,1)
+              //this.getDevice(1,1)
 
           }
       }
       onCheckbox2Change(event: Event): void {
         const checkbox = event.target as HTMLInputElement;
         if (checkbox.checked) {
-          this.getDevice(2,2)
+          //this.getDevice(2,2)
 
         } else {
-            this.getDevice(2,1)
+            //this.getDevice(2,1)
 
         }
       }
       onCheckbox3Change(event: Event): void {
         const checkbox = event.target as HTMLInputElement;
         if (checkbox.checked) {
-            this.getDevice(3,2)
+            //this.getDevice(3,2)
 
           } else {
-              this.getDevice(3,1)
+              //this.getDevice(3,1)
 
           }
       }
       onCheckbox4Change(event: Event): void {
         const checkbox = event.target as HTMLInputElement;
         if (checkbox.checked) {
-            this.getDevice(4,2)
+            //this.getDevice(4,2)
 
           } else {
-              this.getDevice(4,1)
+              //this.getDevice(4,1)
 
           }
       }
       onCheckbox5Change(event: Event): void {
         const checkbox = event.target as HTMLInputElement;
         if (checkbox.checked) {
-            this.getDevice(5,2)
+            //this.getDevice(5,2)
 
           } else {
-              this.getDevice(5,1)
+              //this.getDevice(5,1)
 
           }
       }
       onCheckbox6Change(event: Event): void {
         const checkbox = event.target as HTMLInputElement;
         if (checkbox.checked) {
-            this.getDevice(6,2)
+            //this.getDevice(6,2)
 
           } else {
-              this.getDevice(6,1)
+              //this.getDevice(6,1)
 
           }
       }
       onCheckbox7Change(event: Event): void {
         const checkbox = event.target as HTMLInputElement;
         if (checkbox.checked) {
-            this.getDevice(7,2)
+            //this.getDevice(7,2)
 
           } else {
-              this.getDevice(7,1)
+              //this.getDevice(7,1)
 
           }
       }
       onCheckbox8Change(event: Event): void {
         const checkbox = event.target as HTMLInputElement;
         if (checkbox.checked) {
-            this.getDevice(8,2)
+            //this.getDevice(8,2)
 
           } else {
-              this.getDevice(8,1)
+              //this.getDevice(8,1)
 
           }
       }
       onCheckbox9Change(event: Event): void {
         const checkbox = event.target as HTMLInputElement;
         if (checkbox.checked) {
-            this.getDevice(9,2)
+            //this.getDevice(9,2)
 
           } else {
-              this.getDevice(9,1)
+              // //this.getDevice(9,1)
 
           }
       }
       getCheckedCount(): number {
-        return [this.do1, this.do2, this.do3, this.do4, this.do5, this.do6, this.do7, this.do8].filter(v => v).length;
+        return [this.do1, this.do2, this.do3, this.do4, this.do5, this.do6, this.do7, this.do8,this.do9].filter(v => v).length;
       }
 
       onCheckboxChange(valve: string, event: Event) {
@@ -1115,17 +1138,13 @@ debugger
 
         if (isChecked && this.getCheckedCount() >= this.maxSelectable) {
           // Prevent checking if the max limit is reached
-          (event.target as HTMLInputElement).checked = false;
-        //   this.getDevice(getValveNumber(valve),1)
-          debugger
+          (event.target as HTMLInputElement).checked = false; debugger
         } else {
             if(isChecked){
                 this[valve] = isChecked;
-                this.getDevice(getValveNumber(valve),2)
             }
             else{
                 this[valve] = isChecked;
-                this.getDevice(getValveNumber(valve),1)
             }
 
           debugger
@@ -1173,7 +1192,7 @@ debugger
             do_status:status
           };
 
-    const apiUrl = this.api.baseUrl;
+  const apiUrl = this.api.baseUrl;
   const token = localStorage.getItem('token');
   const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`)
   this.spinner=true;
@@ -1209,6 +1228,61 @@ debugger
         console.log(error.status);
       }
     );
+}
+sendData(){
+  const doStates = [];
+  for (let i = 1; i <= 9; i++) {
+    const key = `do${i}` as keyof this; // ensures TypeScript compatibility
+    const status = this[key] ? 2 : 1;
+    doStates.push({
+      do_no: i,
+      do_status: status
+    });
+  }
+
+  const payload = {
+    device:this.selectedDealer.device,
+    device_id:this.selectedDealer.device_id,
+    do: doStates
+  };
+  console.log(payload);
+  const apiUrl = this.api.baseUrl;
+  const token = localStorage.getItem('token');
+  const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`)
+  this.spinner=true;
+  this.http.post(apiUrl+'/mqtt/publish_all_digital_output', payload,{ headers }).subscribe(
+      (res) => {
+        console.log(res);
+        this.spinner=false;
+        const response:any=res
+        if(response.status=="success"){
+            this.spinner=false;
+            this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Send all valve status', life: 3000 });
+        //   this.resetData();
+        debugger
+          }
+          else{
+            this.spinner=false;
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Data Related Issue!!', life: 3000 });
+          }
+
+
+      },
+      (error) => {
+        if(error.status=='401'){
+          this.router.navigate(['/']);
+
+         }
+        console.log(error.status);
+        this.spinner=false
+        if(error.status=='401'){
+          this.router.navigate(['/']);
+
+         }
+        console.log(error.status);
+      }
+    );
+  
 }
 
 }

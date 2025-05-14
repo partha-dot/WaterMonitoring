@@ -473,7 +473,7 @@ export class OrgLiveComponent implements OnInit, OnDestroy {
     // }
     connectToWebSocket(p_id,org_id) {
         // this.websocketService.devsocketClose();
-
+debugger
         this.spinner=true;
         this.websocketSubscription = this.websocketService.connectOrg(p_id,org_id)
           .subscribe(
@@ -486,6 +486,29 @@ export class OrgLiveComponent implements OnInit, OnDestroy {
             //   this.wsData=AllData.lastdata;
               this.WaterData = AllData.last_all_device_data;
               console.log(this.WaterData);
+
+            const mergedDevices = this.cities.map(device => {
+              const data = this.WaterData.find(d => d.device_id === device.device_id);
+              return {
+                ...device,
+                ...data  // This will merge all matching properties (like tw, flow_rate1, etc.)
+              };
+            });
+            console.log(mergedDevices);
+            if(mergedDevices){
+              mergedDevices.forEach(f => {
+              if (f.created_at && this.calculateDifference(f.created_at) <= 60) {
+                f.status = 'Y';
+              } else {
+                f.status = 'N';
+              }
+            });
+            this.cities=mergedDevices;
+            this.spinner=false;
+            }
+            
+
+
               this.WaterData.forEach(e=>{
                 this.deviceInfo.push(e.device_name)
                 this.flowRate.push(e.flow_rate1)
@@ -502,7 +525,6 @@ export class OrgLiveComponent implements OnInit, OnDestroy {
 
 
 
-              this.spinner=false;
 
             },
             (error) => {
@@ -592,6 +614,9 @@ export class OrgLiveComponent implements OnInit, OnDestroy {
                 this.spinner=false
                 this.data1=response
                 this.cities=this.data1.data
+                
+                console.log(this.cities);
+                
                 this.selectedDealer=this.cities[0]
                 console.log(this.selectedDealer);
 
@@ -612,7 +637,21 @@ export class OrgLiveComponent implements OnInit, OnDestroy {
             }
             );
         }
+calculateDifference(date1Str: string): number {
 
+    // const date1 = new Date("2024-05-31 15:15:21");
+    const date1 = new Date(date1Str);
+    const date2 = new Date();
+
+    // Get the time difference in milliseconds
+    const timeDifference = Math.abs(date2.getTime() - date1.getTime());
+
+    // Convert the time difference to minutes
+    const differenceInMinutes = Math.floor(timeDifference / (1000 * 60));
+    console.log(differenceInMinutes);
+
+    return differenceInMinutes;
+  }
       dateConvt(timestamp:any){
       const dateObject = new Date(timestamp);
 
@@ -628,7 +667,7 @@ export class OrgLiveComponent implements OnInit, OnDestroy {
       }
       getDeviceLiveData(p_id:number,o_id:number){
 
-
+      debugger
       this.connectToWebSocket(p_id,o_id);
       console.log(this.websocketService.socketStatus);
       this.spinner=true
